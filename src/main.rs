@@ -87,6 +87,18 @@ fn convert_mac_address(hex_address: String) -> String {
     return formatted_mac;
 }
 
+fn decode_total_packet_length(data :String) -> i64
+{
+    let total_packet_length: String = data.chars().skip(32).take(4).collect();
+    if let Ok(decoded_bytes) = hex::decode(total_packet_length) {
+        if decoded_bytes.len() >= 2 {
+            let aux_length = ((decoded_bytes[0] as u16) << 8 | decoded_bytes[1] as u16) as i64;
+            return aux_length;
+        }
+    }
+    return -1;
+}
+
 fn convert_ip_address(hex_ip :String) -> String 
 {
     let decode_ip = hex::decode(&hex_ip).unwrap();
@@ -96,6 +108,35 @@ fn convert_ip_address(hex_ip :String) -> String
         .collect::<Vec<String>>()
         .join(".");
     return formatted_ip;
+}
+
+fn handle_ip_flags(flags: i32) {
+    const DF: i32 = 0b10; // Binário: 10
+    const MF: i32 = 0b01; // Binário: 01
+    const NONE: i32 = 0b00; // Binário: 00
+
+    // Verificar DF
+    if flags & DF != 0 {
+        println!("Don't Fragment (DF) is set.");
+    } else {
+        println!("Don't Fragment (DF) is not set.");
+    }
+
+    // Verificar MF
+    if flags & MF != 0 {
+        println!("More Fragments (MF) is set.");
+    } else {
+        println!("More Fragments (MF) is not set.");
+    }
+
+    // Verificar combinações específicas
+    match (flags & DF, flags & MF) {
+        (DF, 0) => println!("DF is set, MF is not set."),
+        (0, MF) => println!("MF is set, DF is not set."),
+        (DF, MF) => println!("DF and MF are both set."),
+        (NONE, NONE) => println!("Neither DF nor MF is set."),
+        _ => println!("Unknown combination of DF and MF."),
+    }
 }
 
 pub fn handle_eth_frame(data :String) -> EthFrame {
@@ -185,10 +226,10 @@ pub fn handle_arp_frame(data: String) -> ArpFrame {
 fn handle_ip_frame(data :String) -> i64{
     let version :String = data.chars().skip(28).take(1).collect();
     let header_length :String =  data.chars().skip(29).take(1).collect();
-    let total_packet_length :String = data.chars().skip(30).take(4).collect();
-    println!("Total_packet_length: {:?}", total_packet_length);
-    let aux_length = hex::decode(total_packet_length);
-    println!("Total_packet_length: {:?}", aux_length);
+    let identification :String = data.chars().skip(36).take(4).collect();
+    let mut flags :String = data.chars().skip(40).take(2).collect();
+    let total_packet_length = decode_total_packet_length(data);
+    println!("Total packet length {}", total_packet_length);
     return 3;
 }
 
