@@ -1,0 +1,23 @@
+<h1 align="center">🚧<br>Network Analyzer</h1> <br/>
+The project focuses on transforming raw network byte data, sourced from an input file, into human-readable information. The current implementation covers the decoding of Ethernet, ARP, and IP frames, with future plans to extend support for TCP, UDP, and HTTP protocols. <br/><br/>
+🔑 Key Features: <br/><br/>
+
+  <ol>
+    <li>Ethernet Frame Decoding: The system interprets Ethernet frames, extracting details such as source and destination MAC addresses, and identifying the encapsulated protocol.</li><br/>
+    <li>ARP Frame Decoding: Address Resolution Protocol (ARP) frames are parsed to reveal information about the mapping between IP addresses and MAC addresses.</li><br/>
+    <li>IP Frame Decoding: Internet Protocol (IP) frames are processed to expose details such as source and destination IP addresses, time-to-live (TTL), and control flags.</li><br/>
+  </ol>
+<br/>
+🔮 Future Enhancements: <br/><br/>
+
+<ol>
+    <li>TCP/UDP Decoding: The project aims to extend its capabilities to include the decoding of Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) frames. This will provide insights into data communication at the transport layer.</li><br/>
+    <li>HTTP Analysis: Integration of HTTP decoding will enable the examination of application layer data, offering a deeper understanding of web traffic and communication.</li><br/>
+</ol>
+<br/>
+
+
+--- 
+
+<h3>🦄 Author</h3>
+<p>At0mic-l1mbo</p>
