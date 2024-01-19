@@ -24,7 +24,7 @@ The project focuses on transforming raw network byte data, sourced from an input
 
 ```rust
 cargo run
-/home/user/Desktop/network_bytes_file.txt
+~/user/Desktop/network_bytes_file.txt
 
 ```
 <br/>
