@@ -19,7 +19,7 @@ impl fmt::Display for EthFrame {
     }
 }
 
-pub fn handle_eth_frame(data: String) -> EthFrame {
+pub fn handle_eth_frame(data: &str) -> EthFrame {
     const IP: &str = "0800";
     const ARP: &str = "0806";
 
